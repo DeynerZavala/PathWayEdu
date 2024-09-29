@@ -1,0 +1,12 @@
+[submodule "pathway-edu-api-gateway"]
+	path = pathway-edu-api-gateway
+	url = https://github.com/DeynerZavala/PathWayEdu_api-gateway
+[submodule "pathway-edu-backend-ms2"]
+	path = pathway-edu-backend-ms2
+	url = https://github.com/DeynerZavala/pathway-edu_backend_ms2
+[submodule "pathway-edu-backend-ms1"]
+	path = pathway-edu-backend-ms1
+	url = https://github.com/DeynerZavala/pathway-edu_backend_ms1
+[submodule "pathway-edu-frontend"]
+	path = pathway-edu-frontend
+	url = https://github.com/renzoDc-1/pathway-edu_frontend
