@@ -58,6 +58,21 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./db-init-scripts/init-multiple-dbs.sh:/docker-entrypoint-initdb.d/init-multiple-dbs.sh
 
+  github-runner:
+    image: myoung34/github-runner:latest
+    environment:
+      REPO_URL: https://github.com/DeynerZavala/PathWayEdu
+      RUNNER_NAME: docker-runner
+      RUNNER_TOKEN: AZP4V3ZX3TRJHTKBBULYP2THC4656
+      RUNNER_WORKDIR: /tmp/github-runner
+      RUNNER_LABELS: ec2, docker
+    volumes:
+      - ./runner:/runner
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - my-network
+    restart: always
+
 networks:
   my-network:
     driver: bridge
