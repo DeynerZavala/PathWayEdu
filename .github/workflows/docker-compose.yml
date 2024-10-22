@@ -1,0 +1,66 @@
+version: "3"
+services:
+  api-gateway:
+    build:
+      context: ./pathway-edu-api-gateway
+    networks:
+      - my-network
+    ports:
+      - "3000:3000"
+    depends_on:
+      - ms1
+      - ms2
+
+  ms1:
+    build:
+      context: ./pathway-edu-backend-ms1
+    networks:
+      - my-network
+    ports:
+      - "3001:3001"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=admin123
+      - DB_DATABASE=PathwayEduM1
+      - DB_SSL=false
+    depends_on:
+      - db
+
+  ms2:
+    build:
+      context: ./pathway-edu-backend-ms2
+    networks:
+      - my-network
+    ports:
+      - "3002:3002"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=admin123
+      - DB_DATABASE=PathwayEduM2
+      - DB_SSL=false
+    depends_on:
+      - db
+
+  db:
+    image: postgres:17rc1-alpine3.20
+    networks:
+      - my-network
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin123
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db-init-scripts/init-multiple-dbs.sh:/docker-entrypoint-initdb.d/init-multiple-dbs.sh
+
+networks:
+  my-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
